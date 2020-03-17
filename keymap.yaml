@@ -9,7 +9,7 @@ s:
   file: 'samples/crash/1.wav'
   volume: 1.0
 d:
-  file: 'samples/open_hh/1.wav'
+  file: 'samples/closed_hh/1.wav'
   volume: 1.0
 f:
   file: 'samples/bass/1.wav'
@@ -20,7 +20,7 @@ j:
   file: 'samples/bass/1.wav'
   volume: 1.0
 k:
-  file: 'samples/open_hh/1.wav'
+  file: 'samples/closed_hh/1.wav'
   volume: 1.0
 l:
   file: 'samples/crash/1.wav'

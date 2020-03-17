@@ -6,11 +6,12 @@ from pygame import mixer, event, font, display, K_ESCAPE, KEYDOWN, QUIT
 
 class Drumpy:
     KEYMAP_FILE = 'keymap.yaml'
-    FONT_SIZE = 30
+    FONT_SIZE = 20
     FONT_COLOR = (150, 250, 150)
     BG_COLOR = (20, 40, 20)
-    WINDOW_SIZE = (550, 28)
+    WINDOW_WIDTH = 400
     WINDOW_CAPTION = 'Drumpy'
+    MARGIN = 5
 
     def __init__(self):
         # Store keyboard keys and corresponded sounds
@@ -26,18 +27,21 @@ class Drumpy:
         # at the same time without stopping previously started ones
         mixer.set_num_channels(20)
 
-        # Set up the window
-        self._screen = display.set_mode(self.WINDOW_SIZE)
-        display.set_caption(self.WINDOW_CAPTION)
-
-        # Set up font
+        # Get any mono font, if no mono fonts use system default
+        fonts = tuple(filter(lambda txt: 'mono' in txt, font.get_fonts()))
+        win_font = fonts[0] if fonts else None
         font.init()
-        self._font = font.SysFont(None, self.FONT_SIZE)
+        self._font = font.SysFont(win_font, self.FONT_SIZE)
+
+        # Set up the window
+        win_height = len(self._keymap) * self.FONT_SIZE + 2 * self.MARGIN
+        self._screen = display.set_mode((self.WINDOW_WIDTH, win_height))
+        display.set_caption(self.WINDOW_CAPTION)
 
     def run(self):
         """ Prepare sounds and run main loop """
         self._register_all_sounds()
-        self._print_keys()
+        self._print(self._keymap_description)
 
         while True:
             for e in event.get():
@@ -57,6 +61,9 @@ class Drumpy:
         Create Sound object for each sound file and
         store it in the key-sound dict
         """
+        # To describe keymap to user
+        self._keymap_description = []
+
         for key, settings in self._keymap.items():
             # Get sound file and volume for this key
             filename = settings.get('file')
@@ -70,6 +77,10 @@ class Drumpy:
             sound.set_volume(vol)
             self._key_sound[key] = sound
 
+            # Prepare key description
+            filename_description = filename.replace("samples/", "")
+            self._keymap_description.append(f'[ {key} ]  {filename_description} {round(vol * 100)}%')
+
     def _play_sound(self, key):
         if key not in self._key_sound:
             self._print(f'Wrong key "{key}", not set in {self.KEYMAP_FILE}')
@@ -80,18 +91,19 @@ class Drumpy:
         sound = self._key_sound[key]
         ch.play(sound)
 
-        self._print_keys()
+        self._print(self._keymap_description)
 
-    def _print(self, txt):
+    def _print(self, txt_list):
         """ Prints text in the pygame window """
-        self._screen.fill(self.BG_COLOR)
-        txt_surface = self._font.render(txt, True, self.FONT_COLOR)
-        self._screen.blit(txt_surface, (5, 3))
-        display.flip()
+        if isinstance(txt_list, str):
+            txt_list = (txt_list,)
 
-    def _print_keys(self):
-        """ Print all keyboard keys correctly set in keymap settings """
-        self._print('[ ' + ' ]  [ '.join(self._key_sound.keys()) + ' ]')
+        self._screen.fill(self.BG_COLOR)
+        for line, txt in enumerate(txt_list):
+            line_y_pos = line * self.FONT_SIZE
+            txt_surface = self._font.render(txt, True, self.FONT_COLOR)
+            self._screen.blit(txt_surface, (self.MARGIN, self.MARGIN + line_y_pos))
+        display.flip()
 
 
 if __name__ == '__main__':
