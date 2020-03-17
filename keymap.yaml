@@ -1,7 +1,7 @@
 # Keyboard keys and corresponded files to play when this key pressed.
 # Volume between 0.0 and 1.0.
 
-# Left hand
+# Middle row
 a:
   file: 'samples/snare/1.wav'
   volume: 1.0
@@ -9,18 +9,22 @@ s:
   file: 'samples/crash/1.wav'
   volume: 1.0
 d:
-  file: 'samples/closed_hh/1.wav'
+  file: 'samples/bass/1.wav'
   volume: 1.0
 f:
-  file: 'samples/bass/1.wav'
+  file: 'samples/closed_hh/1.wav'
   volume: 1.0
-
-# Right hand
+g:
+  file: 'samples/open_hh/1.wav'
+  volume: 1.0
+h:
+  file: 'samples/open_hh/1.wav'
+  volume: 1.0
 j:
-  file: 'samples/bass/1.wav'
+  file: 'samples/closed_hh/1.wav'
   volume: 1.0
 k:
-  file: 'samples/closed_hh/1.wav'
+  file: 'samples/bass/1.wav'
   volume: 1.0
 l:
   file: 'samples/crash/1.wav'
