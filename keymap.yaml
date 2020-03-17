@@ -1,42 +1,40 @@
 # Keyboard keys and corresponded files to play when this key pressed.
-# Volume between 0.0 and 1.0.
+# Volume range is 0.0 to 1.0 (100%), if not set it is 1.0.
 
 # Middle row
 a:
   file: 'samples/snare/1.wav'
-  volume: 1.0
 s:
   file: 'samples/crash/1.wav'
-  volume: 1.0
+  volume: .7
 d:
   file: 'samples/bass/1.wav'
-  volume: 1.0
+  volume: .8
 f:
   file: 'samples/closed_hh/1.wav'
-  volume: 1.0
+  volume: .7
 g:
   file: 'samples/open_hh/1.wav'
-  volume: 1.0
 h:
   file: 'samples/open_hh/1.wav'
-  volume: 1.0
 j:
   file: 'samples/closed_hh/1.wav'
-  volume: 1.0
+  volume: .7
 k:
   file: 'samples/bass/1.wav'
-  volume: 1.0
+  volume: .8
 l:
   file: 'samples/crash/1.wav'
-  volume: 1.0
+  volume: .7
 ';':
   file: 'samples/snare/1.wav'
-  volume: 1.0
 
 # Top row
 t:
   file: 'samples/toms/1.wav'
+  volume: .9
 y:
   file: 'samples/toms/9.wav'
+  volume: .7
 u:
   file: 'samples/toms/2.wav'

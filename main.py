@@ -76,7 +76,7 @@ class Drumpy:
 
             # Prepare key description
             filename_description = filename.replace("samples/", "")
-            self._keymap_description.append(f'[ {key} ]  {filename_description} {round(vol * 100)}%')
+            self._keymap_description.append(f'[ {key} ] {filename_description} {round(vol * 100)}%')
 
     def _play_sound(self, key):
         if key not in self._key_sound:
