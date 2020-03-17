@@ -32,3 +32,11 @@ l:
 ';':
   file: 'samples/snare/1.wav'
   volume: 1.0
+
+# Top row
+t:
+  file: 'samples/toms/1.wav'
+y:
+  file: 'samples/toms/9.wav'
+u:
+  file: 'samples/toms/2.wav'

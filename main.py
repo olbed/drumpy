@@ -9,7 +9,7 @@ class Drumpy:
     FONT_SIZE = 20
     FONT_COLOR = (150, 250, 150)
     BG_COLOR = (20, 40, 20)
-    WINDOW_WIDTH = 400
+    WINDOW_WIDTH = 420
     WINDOW_CAPTION = 'Drumpy'
     MARGIN = 5
 
@@ -67,9 +67,6 @@ class Drumpy:
         for key, settings in self._keymap.items():
             # Get sound file and volume for this key
             filename = settings.get('file')
-            if not filename:
-                self._print(f'Skipping "{key}" key, file not set in keymap')
-                continue
             vol = settings.get('volume', 1.0)
 
             # Create Sound obj and put it in our key-sound dict
@@ -83,7 +80,7 @@ class Drumpy:
 
     def _play_sound(self, key):
         if key not in self._key_sound:
-            self._print(f'Wrong key "{key}", not set in {self.KEYMAP_FILE}')
+            self._print((f'Key "{key}" is not set in {self.KEYMAP_FILE}',))
             return
 
         # Forcing finding free channel and use it to play sound
@@ -95,9 +92,6 @@ class Drumpy:
 
     def _print(self, txt_list):
         """ Prints text in the pygame window """
-        if isinstance(txt_list, str):
-            txt_list = (txt_list,)
-
         self._screen.fill(self.BG_COLOR)
         for line, txt in enumerate(txt_list):
             line_y_pos = line * self.FONT_SIZE
