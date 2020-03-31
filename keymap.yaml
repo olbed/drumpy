@@ -6,26 +6,28 @@ a:
   file: 'samples/snare/1.wav'
 s:
   file: 'samples/crash/1.wav'
-  volume: .7
+  volume: .75
 d:
   file: 'samples/bass/1.wav'
   volume: .8
 f:
   file: 'samples/closed_hh/1.wav'
-  volume: .7
+  volume: .5
 g:
   file: 'samples/open_hh/1.wav'
+  volume: .75
 h:
   file: 'samples/open_hh/1.wav'
+  volume: .75
 j:
   file: 'samples/closed_hh/1.wav'
-  volume: .7
+  volume: .5
 k:
   file: 'samples/bass/1.wav'
   volume: .8
 l:
   file: 'samples/crash/1.wav'
-  volume: .7
+  volume: .75
 ';':
   file: 'samples/snare/1.wav'
 

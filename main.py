@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+"""Play drums with your keyboard"""
 import sys
 
 import yaml

@@ -1,2 +1,2 @@
-pygame==1.9.6
-PyYAML==5.3
+pygame~=1.9.6
+PyYAML~=5.3.1
