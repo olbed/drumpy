@@ -6,7 +6,7 @@ with open('README.md') as fh:
 setup(
     name='drumpy',
     packages=['drumpy'],
-    version='0.0.13',
+    version='0.0.20',
     author='olbed',
     description='Play drums on your keyboard',
     long_description=long_description,

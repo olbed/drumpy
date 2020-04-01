@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Play drums with your keyboard"""
+import pathlib
 import sys
 
 import yaml
@@ -16,11 +17,13 @@ class Drumpy:
     MARGIN = 5
 
     def __init__(self):
+        self.dir = str(pathlib.Path(__file__).parent.absolute())
+
         # Store keyboard keys and corresponded sounds
         self._key_sound = {}
 
         # Load keymap settings
-        with open(self.KEYMAP_FILE) as f:
+        with open(self.dir + '/' + self.KEYMAP_FILE) as f:
             self._keymap = yaml.safe_load(f)
 
         # Lower buffer to lower sound delay
@@ -68,7 +71,7 @@ class Drumpy:
 
         for key, settings in self._keymap.items():
             # Get sound file and volume for this key
-            filename = settings.get('file')
+            filename = self.dir + '/' + settings.get('file')
             vol = settings.get('volume', 1.0)
 
             # Create Sound obj and put it in our key-sound dict
@@ -77,8 +80,8 @@ class Drumpy:
             self._key_sound[key] = sound
 
             # Prepare key description
-            filename_description = filename.replace("samples/", "")
-            self._keymap_description.append(f'[ {key} ] {filename_description} {round(vol * 100)}%')
+            short_name = '/'.join(filename.split('/')[-2:])
+            self._keymap_description.append(f'[ {key} ] {short_name} {round(vol * 100)}%')
 
     def _play_sound(self, key):
         if key not in self._key_sound:

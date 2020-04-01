@@ -1,2 +1,7 @@
 include drumpy/keymap.yaml
-include samples/*
+include drumpy/samples/bass/*
+include drumpy/samples/closed_hh/*
+include drumpy/samples/crash/*
+include drumpy/samples/open_hh/*
+include drumpy/samples/snare/*
+include drumpy/samples/toms/*
