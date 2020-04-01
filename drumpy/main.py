@@ -102,5 +102,5 @@ class Drumpy:
         display.flip()
 
 
-if __name__ == '__main__':
+def run():
     Drumpy().run()
