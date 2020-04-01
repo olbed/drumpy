@@ -5,3 +5,8 @@
 # IDE configs
 /.idea/
 /.vscode/
+
+# setup.py
+/build/
+/dist/
+*.egg-info

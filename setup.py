@@ -5,7 +5,7 @@ with open("README.md") as fh:
 
 setuptools.setup(
     name="drumpy",
-    version="0.0.4",
+    version="0.0.7",
     description="Play drums on your keyboard",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -17,4 +17,9 @@ setuptools.setup(
             'drumpy = drumpy.main:run',
         ],
     },
+    install_requires=[
+        'pygame>=1.9.6,<2',
+        'PyYAML>=5.3.1,<6',
+    ],
+    include_package_data=True,
 )
