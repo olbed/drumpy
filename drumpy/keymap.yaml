@@ -3,40 +3,40 @@
 
 # Middle row
 a:
-  file: 'samples/snare/1.wav'
+  file: 'snare/1.wav'
 s:
-  file: 'samples/crash/1.wav'
+  file: 'crash/1.wav'
   volume: .75
 d:
-  file: 'samples/bass/1.wav'
+  file: 'bass/1.wav'
   volume: .8
 f:
-  file: 'samples/closed_hh/1.wav'
+  file: 'closed_hh/1.wav'
   volume: .5
 g:
-  file: 'samples/open_hh/1.wav'
+  file: 'open_hh/1.wav'
   volume: .75
 h:
-  file: 'samples/open_hh/1.wav'
+  file: 'open_hh/1.wav'
   volume: .75
 j:
-  file: 'samples/closed_hh/1.wav'
+  file: 'closed_hh/1.wav'
   volume: .5
 k:
-  file: 'samples/bass/1.wav'
+  file: 'bass/1.wav'
   volume: .8
 l:
-  file: 'samples/crash/1.wav'
+  file: 'crash/1.wav'
   volume: .75
 ';':
-  file: 'samples/snare/1.wav'
+  file: 'snare/1.wav'
 
 # Top row
 t:
-  file: 'samples/toms/1.wav'
+  file: 'toms/1.wav'
   volume: .9
 y:
-  file: 'samples/toms/9.wav'
+  file: 'toms/9.wav'
   volume: .7
 u:
-  file: 'samples/toms/2.wav'
+  file: 'toms/2.wav'

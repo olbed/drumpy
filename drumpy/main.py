@@ -7,8 +7,22 @@ import yaml
 from pygame import mixer, event, font, display, K_ESCAPE, KEYDOWN, QUIT
 
 
-class Drumpy:
+class FileResolver:
     KEYMAP_FILE = 'keymap.yaml'
+    SAMPLES_DIR = 'samples'
+
+    def __init__(self):
+        self._package_dir = pathlib.Path(__file__).parent.absolute()
+
+    @property
+    def keymap_path(self):
+        return str(self._package_dir.joinpath(self.KEYMAP_FILE))
+
+    def get_sample_path(self, rel_path):
+        return str(self._package_dir.joinpath(self.SAMPLES_DIR, rel_path))
+
+
+class Drumpy:
     FONT_SIZE = 20
     FONT_COLOR = (150, 250, 150)
     BG_COLOR = (20, 40, 20)
@@ -17,13 +31,13 @@ class Drumpy:
     MARGIN = 5
 
     def __init__(self):
-        self.dir = str(pathlib.Path(__file__).parent.absolute())
+        self._files = FileResolver()
 
         # Store keyboard keys and corresponded sounds
         self._key_sound = {}
 
         # Load keymap settings
-        with open(self.dir + '/' + self.KEYMAP_FILE) as f:
+        with open(self._files.keymap_path) as f:
             self._keymap = yaml.safe_load(f)
 
         # Lower buffer to lower sound delay
@@ -71,21 +85,21 @@ class Drumpy:
 
         for key, settings in self._keymap.items():
             # Get sound file and volume for this key
-            filename = self.dir + '/' + settings.get('file')
+            rel_path = settings.get('file')
+            abs_path = self._files.get_sample_path(rel_path)
             vol = settings.get('volume', 1.0)
 
             # Create Sound obj and put it in our key-sound dict
-            sound = mixer.Sound(filename)
+            sound = mixer.Sound(abs_path)
             sound.set_volume(vol)
             self._key_sound[key] = sound
 
             # Prepare key description
-            short_name = '/'.join(filename.split('/')[-2:])
-            self._keymap_description.append(f'[ {key} ] {short_name} {round(vol * 100)}%')
+            self._keymap_description.append(f'[ {key} ] {rel_path} {round(vol * 100)}%')
 
     def _play_sound(self, key):
         if key not in self._key_sound:
-            self._print((f'Key "{key}" is not set in {self.KEYMAP_FILE}',))
+            self._print((f'Key "{key}" is not set in {self._files.KEYMAP_FILE}',))
             return
 
         # Forcing finding free channel and use it to play sound
@@ -106,4 +120,9 @@ class Drumpy:
 
 
 def run():
+    """Entry point"""
     Drumpy().run()
+
+
+if __name__ == '__main__':
+    run()
