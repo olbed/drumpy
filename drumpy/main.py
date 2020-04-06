@@ -1,25 +1,49 @@
 #!/usr/bin/env python
 """Play drums with your keyboard"""
-import pathlib
+import shutil
 import sys
+from pathlib import Path
 
 import yaml
 from pygame import mixer, event, font, display, K_ESCAPE, KEYDOWN, QUIT
 
 
 class FileResolver:
-    KEYMAP_FILE = 'keymap.yaml'
-    SAMPLES_DIR = 'samples'
+    KEYMAP_FILENAME = 'keymap.yaml'
+    SAMPLES_DIRNAME = 'samples'
+    STATIC_DIRNAME = 'static'
+    HOME_STATIC_DIRNAME = '.drumpy'
 
     def __init__(self):
-        self._package_dir = pathlib.Path(__file__).parent.absolute()
+        # Original static files dir located in the package
+        self._static_dir = Path(__file__).parent.absolute().joinpath(self.STATIC_DIRNAME)
+        # A user copy of the orig static files dir to be able modify conf or samples
+        self._user_static_dir = Path.home().joinpath(self.HOME_STATIC_DIRNAME)
+        # Make a copy of static dir in user's home dir
+        self._make_user_static_copy()
 
     @property
     def keymap_path(self):
-        return str(self._package_dir.joinpath(self.KEYMAP_FILE))
+        return str(self._static_dir.joinpath(self.KEYMAP_FILENAME))
 
     def get_sample_path(self, rel_path):
-        return str(self._package_dir.joinpath(self.SAMPLES_DIR, rel_path))
+        return str(self._static_dir.joinpath(self.SAMPLES_DIRNAME, rel_path))
+
+    def _user_static_copy_exists(self):
+        return
+
+    def _make_user_static_copy(self):
+        if not self._user_static_dir.exists():
+            try:
+                shutil.copytree(str(self._static_dir), str(self._user_static_dir))
+            except shutil.Error:
+                print('Failed to copy config files and samples to user '
+                      'home directory. Using defaults instead')
+
+        # If static files were successfully copied to user home dir
+        # or it existed before use it instead of original
+        if self._user_static_dir.exists():
+            self._static_dir = self._user_static_dir
 
 
 class Drumpy:
@@ -90,16 +114,21 @@ class Drumpy:
             vol = settings.get('volume', 1.0)
 
             # Create Sound obj and put it in our key-sound dict
-            sound = mixer.Sound(abs_path)
-            sound.set_volume(vol)
-            self._key_sound[key] = sound
+            try:
+                sound = mixer.Sound(abs_path)
+            except FileNotFoundError:
+                print(f'\nSample file {abs_path} does not exist!\nCheck your config and samples!')
+                exit(1)
+            else:
+                sound.set_volume(vol)
+                self._key_sound[key] = sound
 
             # Prepare key description
             self._keymap_description.append(f'[ {key} ] {rel_path} {round(vol * 100)}%')
 
     def _play_sound(self, key):
         if key not in self._key_sound:
-            self._print((f'Key "{key}" is not set in {self._files.KEYMAP_FILE}',))
+            self._print((f'Key "{key}" is not set in {self._files.KEYMAP_FILENAME}',))
             return
 
         # Forcing finding free channel and use it to play sound

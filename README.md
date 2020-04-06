@@ -10,3 +10,8 @@ Sound samples are in ```samples```
 ```shell script
 pip install -i https://test.pypi.org/simple/ drumpy
 ```
+
+## Run
+```shell script
+drumpy
+```

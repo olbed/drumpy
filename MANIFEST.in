@@ -1,7 +1,7 @@
-include drumpy/keymap.yaml
-include drumpy/samples/bass/*
-include drumpy/samples/closed_hh/*
-include drumpy/samples/crash/*
-include drumpy/samples/open_hh/*
-include drumpy/samples/snare/*
-include drumpy/samples/toms/*
+include drumpy/static/keymap.yaml
+include drumpy/static/samples/bass/*
+include drumpy/static/samples/closed_hh/*
+include drumpy/static/samples/crash/*
+include drumpy/static/samples/open_hh/*
+include drumpy/static/samples/snare/*
+include drumpy/static/samples/toms/*
