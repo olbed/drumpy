@@ -8,7 +8,7 @@ Sound samples are in ```samples```
 
 ## Install
 ```shell script
-pip install -i https://test.pypi.org/simple/ drumpy
+pip install -U drumpy
 ```
 
 ## Run

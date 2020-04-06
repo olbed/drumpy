@@ -1,5 +1,6 @@
 # Keyboard keys and corresponded files to play when this key pressed.
 # Volume range is 0.0 to 1.0 (100%), if not set it is 1.0.
+# Sound files are located in the samples dir.
 
 # Middle row
 a:

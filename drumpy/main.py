@@ -12,13 +12,13 @@ class FileResolver:
     KEYMAP_FILENAME = 'keymap.yaml'
     SAMPLES_DIRNAME = 'samples'
     STATIC_DIRNAME = 'static'
-    HOME_STATIC_DIRNAME = '.drumpy'
+    USER_STATIC_DIRNAME = '.drumpy'
 
     def __init__(self):
         # Original static files dir located in the package
         self._static_dir = Path(__file__).parent.absolute().joinpath(self.STATIC_DIRNAME)
         # A user copy of the orig static files dir to be able modify conf or samples
-        self._user_static_dir = Path.home().joinpath(self.HOME_STATIC_DIRNAME)
+        self._user_static_dir = Path.home().joinpath(self.USER_STATIC_DIRNAME)
         # Make a copy of static dir in user's home dir
         self._make_user_static_copy()
 
@@ -27,10 +27,11 @@ class FileResolver:
         return str(self._static_dir.joinpath(self.KEYMAP_FILENAME))
 
     def get_sample_path(self, rel_path):
+        """
+        Gets sound file relative path which is set in the keymap file
+        and returns its absolute path.
+        """
         return str(self._static_dir.joinpath(self.SAMPLES_DIRNAME, rel_path))
-
-    def _user_static_copy_exists(self):
-        return
 
     def _make_user_static_copy(self):
         if not self._user_static_dir.exists():
@@ -113,12 +114,11 @@ class Drumpy:
             abs_path = self._files.get_sample_path(rel_path)
             vol = settings.get('volume', 1.0)
 
-            # Create Sound obj and put it in our key-sound dict
+            # Create Sound object and put it in the key->Sound dict
             try:
                 sound = mixer.Sound(abs_path)
             except FileNotFoundError:
-                print(f'\nSample file {abs_path} does not exist!\nCheck your config and samples!')
-                exit(1)
+                sys.exit(f'\nSample file {abs_path} does not exist!\nCheck your config and samples!')
             else:
                 sound.set_volume(vol)
                 self._key_sound[key] = sound
